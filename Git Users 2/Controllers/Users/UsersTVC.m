@@ -54,6 +54,9 @@
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
+	SDImageCache *imageCache = [SDImageCache sharedImageCache];
+	[imageCache clearMemory];
+	[imageCache clearDisk];
 }
 
 - (void)dealloc {
