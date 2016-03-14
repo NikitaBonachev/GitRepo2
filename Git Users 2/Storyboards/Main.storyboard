@@ -90,6 +90,11 @@
                                 <action selector="authorizationAction:" destination="cnH-8C-UR0" id="1mm-9e-VV7"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="search" id="fpa-Ws-sck">
+                            <connections>
+                                <action selector="showSearchBarAction:" destination="cnH-8C-UR0" id="V8z-uj-M0g"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="authorizationButton" destination="FFQ-Q3-zFA" id="FUh-8T-E2u"/>
