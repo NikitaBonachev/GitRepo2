@@ -1,0 +1,23 @@
+PODS:
+  - FFGlobalAlertController (1.0.2)
+  - FMDB (2.6):
+    - FMDB/standard (= 2.6)
+  - FMDB/standard (2.6)
+  - Reachability (3.2)
+  - SDWebImage (3.7.5):
+    - SDWebImage/Core (= 3.7.5)
+  - SDWebImage/Core (3.7.5)
+
+DEPENDENCIES:
+  - FFGlobalAlertController
+  - FMDB
+  - Reachability (~> 3.2)
+  - SDWebImage (~> 3.7)
+
+SPEC CHECKSUMS:
+  FFGlobalAlertController: 40c66500ae173895085911ba19d79d045bd26742
+  FMDB: c1968bab3ab0aed38f66cb778ae1e7fa9a652b6e
+  Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
+  SDWebImage: 69c6303e3348fba97e03f65d65d4fbc26740f461
+
+COCOAPODS: 0.39.0

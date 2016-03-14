@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  UsersTVC.h
 //  Git Users 2
 //
 //  Created by Bonachev Nikita on 11.03.16.
@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
-
+@interface UsersTVC : UITableViewController
 
 @end
-
