@@ -150,8 +150,13 @@
 - (void)searchUser:(NSString *)searchText {
 	NSString *search = [searchText stringByReplacingOccurrencesOfString:@" " withString:@""];
 	
-	if ([search isEqualToString:@""]) { return; }
-	if (![GitFetcher checkConnection]) {return;} // Завершить, если нет интернета
+	if ([search isEqualToString:@""]) {
+		return;
+	}
+	
+	if (![GitFetcher checkConnection]) {
+		return; // Завершить, если нет интернета
+	}
 	
 	NSMutableArray *users = [[NSMutableArray alloc] init];
 	static NSURLSessionDataTask *searchTask;
@@ -166,7 +171,7 @@
 	
 	searchTask = [session dataTaskWithRequest:self.sharedRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
 		
-		if (data) {
+		if (!error) {
 			
 			NSDictionary *usersDictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
 			
@@ -180,8 +185,19 @@
 				[users addObject:newUser];
 			}
 			
+			if ([usersDictionary[@"documentation_url"] isEqualToString:@"https://developer.github.com/v3/#rate-limiting"]) {
+				dispatch_async(dispatch_get_main_queue(), ^{
+					[[NSNotificationCenter defaultCenter] postNotificationName:@"NeedAuthorization" object:self];
+				});
+			}
+			
 			dispatch_async(dispatch_get_main_queue(), ^{
 				[UsersStore addSearchResultFromArray:users];
+			});
+			
+		} else { // Есть ошибки подключение
+			dispatch_async(dispatch_get_main_queue(), ^{
+				[[NSNotificationCenter defaultCenter] postNotificationName:@"ConnectionError" object:self];
 			});
 		}
 		

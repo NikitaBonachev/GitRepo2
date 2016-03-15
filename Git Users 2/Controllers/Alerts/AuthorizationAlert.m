@@ -68,7 +68,7 @@ static NSString *password;
 + (void)authorizationDialogShow
 {
 	static dispatch_once_t onceToken;
-	dispatch_once(&onceToken, ^{
+	dispatch_once(&onceToken, ^{ // Возможно, так делать нельзя
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showErrorAlert) name:@"BadCredentialsLoginOrPassword" object:nil];
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showSuccessAlert) name:@"GoodCredentials" object:nil];
 	});
@@ -110,8 +110,11 @@ static NSString *password;
 															 [passwordTextField resignFirstResponder];
 															 // Возможно, нужно было сделать по другому
 														 }]];
-
-	[authorizationAlert show];
+	
+	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+	if (![userDefaults objectForKey:@"login"] && ![userDefaults objectForKey:@"password"]) {
+		[authorizationAlert show];
+	}
 }
 
 #pragma mark - Работа с данными авторизации

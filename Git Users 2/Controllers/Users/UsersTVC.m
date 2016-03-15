@@ -149,6 +149,13 @@
 - (void)successAuthorization {
 	self.authorizationButton.title = @"Signout";
 	[UsersStore reloadStore];
+	
+	if (self.searchController.active) {
+		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^(void){
+			GitFetcher *gitFetcher = [[GitFetcher alloc] init];
+			[gitFetcher searchUser: self.searchController.searchBar.text];
+		});
+	}
 }
 
 #pragma mark - Search implementation
@@ -173,7 +180,9 @@
 	[self.tableView reloadData];
 }
 
+
 - (void)didPresentSearchController:(UISearchController *)searchController {
+	[self.searchController.searchBar becomeFirstResponder];
 	[self.spinner stopAnimating];
 }
 
@@ -199,6 +208,7 @@
 
 - (IBAction)showSearchBarAction:(UIBarButtonItem *)sender {
 	self.searchController.active = YES;
+	[self.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
 }
 
 #pragma mark - Navigation
